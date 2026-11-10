@@ -13,7 +13,7 @@ const titleWords = ["Let's", 'build', 'something'];
 		</h2>
 		<p class="hello-email">{profile.email}</p>
 		<div class="hello-actions">
-			<a class="btn" href={`mailto:${profile.email}`}>
+			<a class="btn" href={`https://mail.google.com/mail/?view=cm&to=${profile.email}`} target="_blank" rel="noreferrer" class="@container group block">
 				Say hello
 				<ArrowIcon />
 			</a>
