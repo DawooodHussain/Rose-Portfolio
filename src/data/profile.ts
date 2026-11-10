@@ -6,4 +6,5 @@ export const profile = {
 	linkedin: 'https://linkedin.com/in/dawoood-hussain-dev',
 	resume: '/resume', // the demo's own Marigold resume (src/pages/resume.astro)
 	year: 2026,
+	years: '02', // years of experience, shown as the "(02)" superscript and the big stat
 };

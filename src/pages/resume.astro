@@ -4,12 +4,12 @@
  * left column, content on the right, 1px ink hairlines between sections. Prints to one A4 page.
  * Content comes from src/data/resume.ts; empty fields are not rendered.
  */
-import Fonts from '../components/Fonts.astro';
+import Star from '../components/Star.astro';
+import StarSprite from '../components/StarSprite.astro';
 import { profile } from '../data/profile';
 import { resume } from '../data/resume';
-import '../styles/base.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
 
-const years = '02';
 const contact = [
 	{ text: resume.role },
 	{ text: resume.location },
@@ -19,149 +19,119 @@ const contact = [
 ].filter((c) => c.text && (c.href === undefined || c.href));
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="robots" content="noindex, nofollow" />
-		<title>Resume — {resume.fullName}</title>
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<Fonts />
-	</head>
-	<body>
-		<nav class="cv-bar" aria-label="Resume">
-			<a class="micro cv-back" href="/">← Back to {profile.name}</a>
-			<svg class="cv-mark" viewBox="0 0 24 24" aria-hidden="true">
-				<path d="M12 1v22M2.47 6.5l19.06 11M2.47 17.5l19.06-11" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"></path>
-			</svg>
-			<button class="btn cv-print" type="button" data-print>Save as PDF</button>
-			<p class="micro cv-print-hint" role="status" data-print-hint hidden>
-				The print dialog didn't open here. Press <kbd>⌘ P</kbd> (Mac) or <kbd>Ctrl P</kbd>, then choose "Save as PDF".
-			</p>
-		</nav>
+<BaseLayout title={`Resume — ${resume.fullName}`}>
+	<StarSprite />
+	<nav class="cv-bar" aria-label="Resume">
+		<a class="micro cv-back" href="/">← Back to {profile.name}</a>
+		<Star class="cv-mark" />
+		<button class="btn cv-print" type="button" data-print>Save as PDF</button>
+		<p class="micro cv-print-hint" role="status" data-print-hint hidden>
+			The print dialog didn't open here. Press <kbd>⌘ P</kbd> (Mac) or <kbd>Ctrl P</kbd>, then choose "Save as PDF".
+		</p>
+	</nav>
 
-		<main class="cv">
-			<header class="cv-head">
-				<h1 class="cv-name">{resume.fullName}<sup class="cv-years" aria-hidden="true">({years})</sup></h1>
-				<p class="micro cv-contact">
-					{
-						contact.map((c, i) => (
-							<>
-								{i > 0 && <span aria-hidden="true"> · </span>}
-								{c.href ? <a href={c.href}>{c.text}</a> : <span>{c.text}</span>}
-							</>
-						))
-					}
-				</p>
-				{resume.summary && <p class="cv-summary">{resume.summary}</p>}
-			</header>
-
-			{
-				resume.experience.length > 0 && (
-					<section class="cv-sec" aria-labelledby="cv-experience">
-						<h2 class="micro cv-label" id="cv-experience">Experience</h2>
-						<div class="cv-body">
-							{resume.experience.map((job) => (
-								<article class="cv-item">
-									<div class="cv-item-head">
-										<h3 class="cv-item-title">
-											{job.role}, {job.org}
-										</h3>
-										{job.dates && <p class="micro cv-dates">{job.dates}</p>}
-									</div>
-									{job.detail && <p class="cv-text">{job.detail}</p>}
-									{job.points.length > 0 && (
-										<ul class="cv-points">
-											{job.points.map((p) => (
-												<li>{p}</li>
-											))}
-										</ul>
-									)}
-								</article>
-							))}
-						</div>
-					</section>
-				)
-			}
-
-			{
-				resume.education.length > 0 && (
-					<section class="cv-sec" aria-labelledby="cv-education">
-						<h2 class="micro cv-label" id="cv-education">Education</h2>
-						<div class="cv-body">
-							{resume.education.map((ed) => (
-								<article class="cv-item">
-									<div class="cv-item-head">
-										<h3 class="cv-item-title">{ed.org}</h3>
-										{ed.dates && <p class="micro cv-dates">{ed.dates}</p>}
-									</div>
-									{ed.role && <p class="cv-text">{ed.role}</p>}
-								</article>
-							))}
-						</div>
-					</section>
-				)
-			}
-
-			{
-				resume.skills.length > 0 && (
-					<section class="cv-sec" aria-labelledby="cv-skills">
-						<h2 class="micro cv-label" id="cv-skills">Skills</h2>
-						<dl class="cv-body cv-skills">
-							{resume.skills.map((s) => (
-								<div class="cv-skill">
-									<dt class="cv-item-title">{s.group}</dt>
-									<dd class="cv-text">{s.items.join(' · ')}</dd>
-								</div>
-							))}
-						</dl>
-					</section>
-				)
-			}
-
-			{
-				resume.languages && (
-					<section class="cv-sec" aria-labelledby="cv-languages">
-						<h2 class="micro cv-label" id="cv-languages">Languages</h2>
-						<p class="cv-body cv-text">{resume.languages}</p>
-					</section>
-				)
-			}
-
-			{
-				resume.interests && (
-					<section class="cv-sec" aria-labelledby="cv-interests">
-						<h2 class="micro cv-label" id="cv-interests">Interests</h2>
-						<p class="cv-body cv-text">{resume.interests}</p>
-					</section>
-				)
-			}
-		</main>
-
-		<script is:inline>
-			// Opens the browser's print dialog (where "Save as PDF" lives). Some places block that
-			// dialog silently, e.g. editor preview panes and embedded browsers: window.print() just
-			// returns without firing 'beforeprint'. In that case, show the keyboard shortcut instead.
-			const printBtn = document.querySelector('[data-print]');
-			const printHint = document.querySelector('[data-print-hint]');
-			printBtn.addEventListener('click', () => {
-				let opened = false;
-				const markOpened = () => (opened = true);
-				addEventListener('beforeprint', markOpened, { once: true });
-				try {
-					window.print();
-				} catch {
-					// Treated the same as a blocked dialog.
+	<main class="cv">
+		<header class="cv-head">
+			<h1 class="cv-name">{resume.fullName}<sup class="cv-years" aria-hidden="true">({profile.years})</sup></h1>
+			<p class="micro cv-contact">
+				{
+					contact.map((c, i) => (
+						<>
+							{i > 0 && <span aria-hidden="true"> · </span>}
+							{c.href ? <a href={c.href}>{c.text}</a> : <span>{c.text}</span>}
+						</>
+					))
 				}
-				setTimeout(() => {
-					removeEventListener('beforeprint', markOpened);
-					printHint.hidden = opened;
-				}, 600);
-			});
-		</script>
-	</body>
-</html>
+			</p>
+			{resume.summary && <p class="cv-summary">{resume.summary}</p>}
+		</header>
+
+		{
+			resume.experience.length > 0 && (
+				<section class="cv-sec" aria-labelledby="cv-experience">
+					<h2 class="micro cv-label" id="cv-experience">Experience</h2>
+					<div class="cv-body">
+						{resume.experience.map((job) => (
+							<article class="cv-item">
+								<div class="cv-item-head">
+									<h3 class="cv-item-title">
+										{job.role}, {job.org}
+									</h3>
+									{job.dates && <p class="micro cv-dates">{job.dates}</p>}
+								</div>
+								{job.detail && <p class="cv-text">{job.detail}</p>}
+								{job.points.length > 0 && (
+									<ul class="cv-points">
+										{job.points.map((p) => (
+											<li>{p}</li>
+										))}
+									</ul>
+								)}
+							</article>
+						))}
+					</div>
+				</section>
+			)
+		}
+
+		{
+			resume.education.length > 0 && (
+				<section class="cv-sec" aria-labelledby="cv-education">
+					<h2 class="micro cv-label" id="cv-education">Education</h2>
+					<div class="cv-body">
+						{resume.education.map((ed) => (
+							<article class="cv-item">
+								<div class="cv-item-head">
+									<h3 class="cv-item-title">{ed.org}</h3>
+									{ed.dates && <p class="micro cv-dates">{ed.dates}</p>}
+								</div>
+								{ed.role && <p class="cv-text">{ed.role}</p>}
+							</article>
+						))}
+					</div>
+				</section>
+			)
+		}
+
+		{
+			resume.skills.length > 0 && (
+				<section class="cv-sec" aria-labelledby="cv-skills">
+					<h2 class="micro cv-label" id="cv-skills">Skills</h2>
+					<dl class="cv-body cv-skills">
+						{resume.skills.map((s) => (
+							<div class="cv-skill">
+								<dt class="cv-item-title">{s.group}</dt>
+								<dd class="cv-text">{s.items.join(' · ')}</dd>
+							</div>
+						))}
+					</dl>
+				</section>
+			)
+		}
+
+		{
+			resume.languages && (
+				<section class="cv-sec" aria-labelledby="cv-languages">
+					<h2 class="micro cv-label" id="cv-languages">Languages</h2>
+					<p class="cv-body cv-text">{resume.languages}</p>
+				</section>
+			)
+		}
+
+		{
+			resume.interests && (
+				<section class="cv-sec" aria-labelledby="cv-interests">
+					<h2 class="micro cv-label" id="cv-interests">Interests</h2>
+					<p class="cv-body cv-text">{resume.interests}</p>
+				</section>
+			)
+		}
+	</main>
+
+	<script>
+		import '../scripts/print';
+	</script>
+</BaseLayout>
 
 <style>
 	/* Rose, like the About chapter it continues. Print switches to white (below). */
@@ -182,7 +152,7 @@ const contact = [
 		align-items: center;
 		min-height: 44px;
 	}
-	.cv-mark {
+	.cv-bar :global(.cv-mark) {
 		width: 40px;
 		height: 40px;
 	}

@@ -1,0 +1,37 @@
+---
+/*
+ * ABOUT (rose-milk): two full screens that scroll normally.
+ *  1. Intro: "about (daud)" centred, the rose beneath it.
+ *  2. Main:  oval + sentence.
+ * Flowers: "Pasture Rose" by Pierre-Joseph Redouté, watercolor, Cleveland Museum of Art,
+ * CC0 public domain (1959.15). Cut out with scripts/cutout-flower.mjs. Decorative only.
+ */
+import { profile } from '../../data/profile';
+import AboutTitle from './AboutTitle.astro';
+---
+
+<section class="about-screen about-intro" id="about" aria-labelledby="about-title">
+	<img class="flower flower-sweep" src="/flowers/rose.webp" width="1003" height="1400" alt="" aria-hidden="true" decoding="async" />
+	<AboutTitle id="about-title" />
+</section>
+
+<section class="about-screen about-main" aria-label="About Daud">
+	<div class="about-body">
+		<!-- Chessboard oval: stands in for a portrait, and nods to the chess habit. -->
+		<!--
+			Photos: Cleveland Museum of Art, CC0 public domain. Oval: "View of the City of Lahore Taken from
+			the Roof of the Palace" (1863–70, 2024.5.26), with the Badshahi Mosque. Inline: Wazir Khan Mosque
+			minaret from "The City of Lahore. Another View…" (2024.5.27); "Mirror Case with a Couple Playing
+			Chess" (1325–50, 1940.1200).
+		-->
+		<div class="about-oval">
+			<img src="/photos/lahore-badshahi.webp" width="900" height="708" alt="Lahore in the 1860s, with the Badshahi Mosque on the skyline" decoding="async" />
+		</div>
+		<p class="about-para">
+			Java developer and student, living and working in Lahore<img class="inline-pic" src="/photos/lahore-minaret.webp" width="160" height="160" alt="" aria-hidden="true" />,
+			Pakistan. A big passion for chess<img class="inline-pic" src="/photos/chess.webp" width="160" height="160" alt="" aria-hidden="true" />,
+			philosophy, and a good series.
+		</p>
+	</div>
+	<span class="page-no" aria-hidden="true">{profile.years}</span>
+</section>

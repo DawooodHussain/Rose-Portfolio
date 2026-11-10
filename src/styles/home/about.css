@@ -1,0 +1,170 @@
+/* ---------- about: two full screens ---------- */
+.about-screen {
+	position: relative;
+	min-height: 100svh;
+	overflow: hidden;
+	display: grid;
+	place-items: center;
+	background: var(--rose);
+}
+/*
+ * Shared geometry for the intro (and the wipe's copies of it):
+ * the title is centred in the first screen view; the rose hangs below it at full size.
+ */
+.about-intro,
+.wipe {
+	--title-half: calc(var(--display-size) * 0.425); /* font-size × 0.85 line-height ÷ 2 */
+	/* Width, capped on short screens so the rose hangs at most ~14svh into the next screen (height = 1.4 × width). */
+	--rose-w: clamp(90px, min(17vw, (54svh - var(--title-half)) / 1.4), 280px);
+	--rose-top: calc(50svh + var(--title-half) + 10svh);
+}
+/*
+ * One screen tall (so snapping lands cleanly). The rose is not clipped: it overflows the
+ * bottom edge and its lower part hangs into the top of the next section, painted above it.
+ */
+.about-intro {
+	display: block;
+	height: 100svh;
+	overflow: visible;
+	z-index: 2;
+}
+.about-main {
+	z-index: 1;
+}
+/* Flowers sit behind the text (z-index 0); text layers above (z-index 1). */
+.flower {
+	position: absolute;
+	z-index: 0;
+	height: auto;
+	pointer-events: none;
+	user-select: none;
+}
+/* Intro: centred under "about", its top just below the title (half-height = font-size × 0.85 ÷ 2). */
+.flower-sweep {
+	left: 50%;
+	top: var(--rose-top);
+	width: var(--rose-w);
+	translate: -50% 0;
+}
+.about-title,
+.about-body,
+.page-no {
+	z-index: 1;
+}
+.about-title {
+	/* Centred in the first screen view (50svh), not the middle of the taller intro section. */
+	position: absolute;
+	top: 50svh;
+	left: 50%;
+	translate: -50% -50%;
+	font: 400 var(--display-size) / 0.85 var(--serif);
+	font-variation-settings: 'opsz' 96;
+	letter-spacing: -0.03em;
+}
+.about-title sup {
+	position: absolute;
+	top: 0.08em;
+	left: 100%;
+	margin-left: 0.1em;
+	font: 400 14px/20px var(--serif);
+	letter-spacing: 0;
+}
+/*
+ * Proportions measured from the reference, as fractions of the screen:
+ * oval left edge 7%, oval width 28.6% (5:6, tilted ~5°), gap ~10%, text column ~46%.
+ */
+.about-body {
+	margin-top: 50px;
+	justify-self: stretch;
+	display: grid;
+	grid-template-columns: var(--oval-w) minmax(0, 46vw);
+	column-gap: 10vw;
+	align-items: center;
+	padding-left: 7vw;
+	--oval-w: min(28.6vw, 52svh);
+}
+.about-oval {
+	width: var(--oval-w);
+	aspect-ratio: 5 / 6;
+	border-radius: 50%;
+	overflow: hidden;
+	/* The frame leans (top to the right); the photo inside is counter-rotated to stay upright. */
+	rotate: 5deg;
+}
+.about-oval img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	/* Keep the Badshahi Mosque's domes and minarets in frame. */
+	object-position: 55% 50%;
+	rotate: -5deg;
+	scale: 1.08;
+}
+.about-para {
+	/* 4.6vw matches the reference's proportions; 8.4svh caps it on short/wide screens so the block stays ~half the height. */
+	font: 400 clamp(30px, min(4.6vw, 8.4svh), 96px) / 1.05 var(--serif);
+	font-variation-settings: 'opsz' 96;
+	letter-spacing: -0.02em;
+}
+/* Small round photos set inside the sentence, like the reference. */
+.inline-pic {
+	display: inline-block;
+	width: 0.95em;
+	height: 0.95em;
+	margin-inline: 0.18em 0.05em;
+	border-radius: 50%;
+	object-fit: cover;
+	vertical-align: -0.14em;
+}
+.page-no {
+	position: absolute;
+	right: 2rem;
+	bottom: 1.5rem;
+	font: 400 clamp(18px, 2vw, 40px) / 1 var(--serif);
+}
+@media (prefers-reduced-motion: no-preference) {
+	.motion .about-para {
+		opacity: 0;
+		translate: 0 1.5rem;
+		transition:
+			opacity 800ms var(--ease),
+			translate 800ms var(--ease);
+	}
+	.motion .about-para.in {
+		opacity: 1;
+		translate: 0 0;
+	}
+}
+
+/* Portrait phones stack the oval over the sentence. (Phones held sideways keep the side-by-side
+   layout above: there's no height to stack in.) */
+@media (max-width: 767px) and (orientation: portrait) {
+	.about-body {
+		margin-top: 30px;
+		grid-template-columns: 1fr;
+		justify-items: center;
+		gap: 2rem;
+		padding: 0 1.25rem;
+	}
+	.about-main {
+		padding-block: 3rem; /* keeps the sentence clear of the page number */
+	}
+	.about-oval {
+		width: min(52vw, 220px, 28svh);
+	}
+	.about-para {
+		font-size: clamp(24px, min(7.5vw, 5svh), 34px);
+		text-align: center;
+	}
+}
+@media (max-width: 767px) {
+	.page-no {
+		right: 1.25rem;
+		bottom: 1.25rem;
+	}
+	.about-intro,
+	.wipe {
+		--rose-w: min(52vw, (54svh - var(--title-half)) / 1.4);
+	}
+}

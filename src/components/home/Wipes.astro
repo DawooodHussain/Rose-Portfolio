@@ -1,0 +1,14 @@
+---
+// Chevron wipes: the page transitions into About (click or scroll down from the hero) and into Hello.
+// Played by src/scripts/home/transitions.ts.
+import AboutTitle from './AboutTitle.astro';
+---
+
+<div class="wipe wipe-about" aria-hidden="true">
+	<!-- Copies of the About title and the sweeping rose, at their exact on-arrival positions, so the
+	     arrow edge reveals them gradually and the hand-off after the jump is invisible. -->
+	<img class="flower flower-sweep" src="/flowers/rose.webp" width="1003" height="1400" alt="" decoding="async" />
+	<AboutTitle as="p" class="wipe-title" />
+</div>
+<!-- Same wipe in marigold for Hello. The script fills it with a copy of the Hello screen's content. -->
+<div class="wipe wipe-hello sec marigold hello" aria-hidden="true" inert></div>

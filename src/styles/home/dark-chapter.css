@@ -1,0 +1,64 @@
+/* ---------- the dark chapter: caption interlude (leaves) and the roaming asterisk ---------- */
+.caption-cols {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	gap: 3rem;
+}
+/* The dark chapter: the leaves and GitHub screens are kohl, with milk text (16.3:1). */
+.interlude,
+.stat-story {
+	background: var(--kohl);
+	color: var(--milk);
+}
+.interlude {
+	overflow: hidden;
+}
+:is(.interlude, .stat-story) ::selection {
+	background: var(--marigold);
+	color: var(--kohl);
+}
+:is(.interlude, .stat-story) :focus-visible {
+	outline-color: var(--milk);
+}
+.leaf-field {
+	position: absolute;
+	inset: 0;
+	overflow: hidden;
+	pointer-events: none;
+	perspective: 600px;
+}
+.leaf-field img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: auto;
+	will-change: transform;
+}
+.roam-mark {
+	position: fixed;
+	z-index: 46;
+	top: 0;
+	left: 50%;
+	width: 56px;
+	height: 56px;
+	--star-stroke: 0.6;
+	/* It only ever travels over the dark chapter. */
+	color: var(--milk);
+	pointer-events: none;
+	/* Parked off-screen until the script places it. */
+	transform: translate(-50%, -200px);
+}
+
+@media (max-width: 767px) {
+	.caption-cols {
+		flex-direction: column;
+		gap: 0.5rem;
+		text-align: center;
+		padding: 0 1.25rem;
+	}
+	.roam-mark {
+		width: 40px;
+		height: 40px;
+	}
+}

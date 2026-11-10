@@ -1,0 +1,26 @@
+---
+// FACTS (rose): the short résumé, last page of the About chapter; links to /resume.
+import { profile } from '../../data/profile';
+import { facts } from '../../data/resume';
+import ArrowIcon from '../ArrowIcon.astro';
+---
+
+<section class="sec facts" id="facts" aria-labelledby="facts-title">
+	<h2 class="visually-hidden" id="facts-title">At a glance</h2>
+	<dl class="facts-list">
+		{
+			facts.map((f, i) => (
+				<div class="fact" style={`--i: ${i}`}>
+					<dt class="micro">{f.label}</dt>
+					<dd class="fact-value">{f.value}</dd>
+				</div>
+			))
+		}
+	</dl>
+	<a class="btn facts-btn" href={profile.resume}>
+		Full resume
+		<ArrowIcon />
+	</a>
+	<p class="micro facts-corner">Open to freelance work</p>
+	<span class="page-no" aria-hidden="true">03</span>
+</section>

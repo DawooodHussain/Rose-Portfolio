@@ -1,0 +1,78 @@
+/* ---------- stat + GitHub line ---------- */
+.stat-story {
+	--line-y: 0.82;
+	position: relative;
+	height: 250svh;
+	scroll-snap-align: start;
+}
+.stat-stage {
+	position: sticky;
+	top: 0;
+	height: 100svh;
+	overflow: hidden;
+}
+.stat {
+	position: absolute;
+	top: 44%;
+	left: 50%;
+	display: grid;
+	justify-items: center;
+	gap: 1.25rem;
+	/* --sink (px) is written by the script as "02" drops into the line. */
+	translate: -50% calc(-50% + var(--sink, 0px));
+}
+.stat-num {
+	font: 400 clamp(150px, 22vw, 330px) / 0.8 var(--serif);
+	font-variation-settings: 'opsz' 96;
+	letter-spacing: -0.03em;
+}
+.stat-label {
+	font: 400 16px/22px var(--serif);
+}
+.marquee {
+	position: absolute;
+	left: 0;
+	top: calc(var(--line-y) * 100svh);
+	translate: 0 -50%;
+	white-space: nowrap;
+	font: 400 clamp(64px, 9vw, 150px) / 1 var(--serif);
+	font-variation-settings: 'opsz' 96;
+	letter-spacing: -0.02em;
+}
+.mq-track {
+	display: inline-block;
+	will-change: transform;
+}
+.mq-word {
+	display: inline-block;
+	margin-right: 0.35em;
+}
+.mq-ch {
+	display: inline-block;
+	transform-origin: 50% 65%;
+}
+/* Ink drops thrown by the splash (script-driven, decorative). */
+.spray {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+.drop {
+	position: absolute;
+	top: 0;
+	left: 0;
+	border-radius: 50%;
+	background: currentColor; /* milk, like the letters they splash from */
+	opacity: 0;
+	will-change: transform;
+}
+/* Reduced motion: stat screen is a plain screen with the number and a straight GitHub line. */
+@media (prefers-reduced-motion: reduce) {
+	.stat-story {
+		height: auto;
+	}
+	.stat-stage {
+		position: relative;
+		height: 100svh;
+	}
+}

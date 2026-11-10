@@ -1,0 +1,12 @@
+---
+// "about (daud)": the real heading on the About intro, and a decorative copy inside the About wipe.
+interface Props {
+	as?: 'h2' | 'p';
+	id?: string;
+	class?: string;
+}
+
+const { as: Tag = 'h2', id, class: className } = Astro.props;
+---
+
+<Tag class:list={['about-title', className]} id={id}><span class="word-mask"><span class="word">about</span></span><sup aria-hidden={Tag === 'h2' ? 'true' : undefined}>(daud)</sup></Tag>

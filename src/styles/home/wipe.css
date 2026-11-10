@@ -1,0 +1,77 @@
+/* ---------- page transition: chevron wipe ---------- */
+/*
+ * Chevron wipe, matched to the reference frame by frame. The peach shape enters from the
+ * left edge as a deep triangle; the tip slows while the top/bottom corners ("shoulders")
+ * catch up, so the arrow flattens into a straight edge by the time it reaches the right.
+ *   frame        8.40s  8.55s  8.70s  8.85s  9.00s
+ *   tip          33%    69%    90%    99%    100%
+ *   shoulders    0%     50%    80%    94%    100%
+ */
+.wipe {
+	position: fixed;
+	inset: 0;
+	z-index: 45;
+	display: grid;
+	place-items: center;
+	height: 100svh;
+	background: var(--rose);
+	pointer-events: none;
+	clip-path: polygon(0 0, 0 0, 0 50%, 0 100%, 0 100%);
+}
+/* Declared after .wipe, so it wins over the rose background above. */
+.wipe-hello {
+	background: var(--marigold);
+}
+.wiping[data-wipe='about'] .wipe-about,
+.wiping[data-wipe='hello'] .wipe-hello {
+	/* Keyframes carry the easing; linear between them keeps the measured pacing. */
+	animation: chevron-wipe 900ms linear forwards;
+}
+/* As the arrow reaches it, the hero name slides up out of its mask. */
+.wiping .hero .word {
+	animation: word-out 420ms cubic-bezier(0.65, 0, 0.35, 1) 120ms forwards;
+}
+/* The (02) superscript sits outside the mask, so it fades out with the name instead. */
+.wiping .hero .years {
+	animation: fade-out 240ms linear 120ms forwards;
+}
+/* The hero asterisk normally sits above the wipe layer (z-index 46 > 45); during the wipe it drops
+   below it, so the chevron sweeps over it with the rest of the old screen. */
+.wiping .mark {
+	z-index: 1;
+}
+/* "about" rises inside the peach while the wipe is still travelling (reference 8.55s). */
+.wiping .wipe-title .word {
+	animation: word-in 520ms cubic-bezier(0.2, 0.7, 0.2, 1) 300ms both;
+}
+.wiping .wipe-title sup {
+	animation: fade 300ms linear 520ms both;
+}
+/* Hello: the title words rise one after another, then the email and buttons fade in, all
+   finished before the wipe ends (900ms), so the jump to the real screen is invisible. */
+.wiping[data-wipe='hello'] .wipe-hello .word {
+	animation: word-in 520ms cubic-bezier(0.2, 0.7, 0.2, 1) calc(260ms + var(--i) * 50ms) both;
+}
+.wiping[data-wipe='hello'] .wipe-hello :is(.hello-email, .hello-actions, .hello-corners) {
+	animation: fade 300ms linear 540ms both;
+}
+@keyframes chevron-wipe {
+	0% {
+		clip-path: polygon(0 0, 0 0, 0 50%, 0 100%, 0 100%);
+	}
+	20% {
+		clip-path: polygon(0 0, 0 0, 33% 50%, 0 100%, 0 100%);
+	}
+	40% {
+		clip-path: polygon(0 0, 50% 0, 69% 50%, 50% 100%, 0 100%);
+	}
+	60% {
+		clip-path: polygon(0 0, 80% 0, 90% 50%, 80% 100%, 0 100%);
+	}
+	80% {
+		clip-path: polygon(0 0, 94% 0, 99% 50%, 94% 100%, 0 100%);
+	}
+	100% {
+		clip-path: polygon(0 0, 100% 0, 100% 50%, 100% 100%, 0 100%);
+	}
+}

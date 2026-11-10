@@ -1,0 +1,14 @@
+---
+// Fixed header: section links on the left, outbound links on the right, MENU on mobile.
+import { linkAttrs, outboundLinks, sectionLinks } from './navLinks';
+---
+
+<nav class="nav" aria-label="Primary">
+	<ul class="nav-group">
+		{sectionLinks.map((l) => <li><a href={l.href} class="nav-link">{l.label}</a></li>)}
+	</ul>
+	<ul class="nav-group right">
+		{outboundLinks.map((l) => <li><a href={l.href} class="nav-link" {...linkAttrs(l)}>{l.label}</a></li>)}
+	</ul>
+	<button class="nav-link menu-btn" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+</nav>

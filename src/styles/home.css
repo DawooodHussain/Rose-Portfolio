@@ -1,0 +1,14 @@
+/*
+ * Home page styles, one file per section. The order matters: later files rely on winning the
+ * cascade over earlier ones (e.g. .wipe's position: fixed over .sec, since the Hello wipe is both).
+ */
+@import './home/page.css';
+@import './home/motion.css';
+@import './home/nav.css';
+@import './home/hero.css';
+@import './home/about.css';
+@import './home/dark-chapter.css';
+@import './home/stat.css';
+@import './home/facts.css';
+@import './home/hello.css';
+@import './home/wipe.css';

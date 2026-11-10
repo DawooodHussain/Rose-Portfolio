@@ -1,0 +1,27 @@
+---
+// HELLO (marigold): the closing contact screen. Copy email is wired by src/scripts/home/copy-email.ts.
+import { profile } from '../../data/profile';
+import ArrowIcon from '../ArrowIcon.astro';
+
+const titleWords = ["Let's", 'build', 'something'];
+---
+
+<section class="sec marigold hello" id="hello" aria-labelledby="hello-title">
+	<div class="hello-inner">
+		<h2 class="hello-title" id="hello-title">
+			{titleWords.map((w, i) => <><span class="word-mask"><span class="word" style={`--i: ${i}`}>{w}</span></span>{i < titleWords.length - 1 && ' '}</>)}
+		</h2>
+		<p class="hello-email">{profile.email}</p>
+		<div class="hello-actions">
+			<a class="btn" href={`mailto:${profile.email}`}>
+				Say hello
+				<ArrowIcon />
+			</a>
+			<button class="text-btn" type="button" data-copy={profile.email}>Copy email</button>
+		</div>
+	</div>
+	<div class="hello-corners">
+		<p class="micro">Based in Lahore · Open to freelance work</p>
+		<p class="micro">© {profile.year} {profile.name}</p>
+	</div>
+</section>

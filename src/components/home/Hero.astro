@@ -1,0 +1,25 @@
+---
+// HERO (marigold): the name, the asterisk mark, and the nav.
+import { profile } from '../../data/profile';
+import Star from '../Star.astro';
+import MobileMenu from './MobileMenu.astro';
+import Nav from './Nav.astro';
+---
+
+<section class="sec marigold hero" id="top">
+	<Nav />
+
+	<!-- The asterisk belongs to the hero: pinned to its top centre, it scrolls away with it (not fixed like the nav). -->
+	<a href="#top" class="mark" aria-label={`${profile.name}, home`}><Star /></a>
+
+	<MobileMenu />
+
+	<h1 class="name-wrap">
+		<span class="name"><span class="word-mask"><span class="word">{profile.name}</span></span><sup class="years" aria-hidden="true">({profile.years})</sup></span>
+	</h1>
+
+	<div class="corner-cols">
+		<p class="micro">Java developer and full stack builder,<br />living and working in Lahore, Pakistan.</p>
+		<p class="micro">A big passion for chess, books,<br />and software that feels simple.</p>
+	</div>
+</section>

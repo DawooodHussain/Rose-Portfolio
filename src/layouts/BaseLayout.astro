@@ -1,0 +1,30 @@
+---
+/*
+ * The document shell shared by every demo page: meta tags (noindex while it's a demo), favicon,
+ * fonts and the shared tokens in base.css. Pages put extra <head> content in the "head" slot.
+ */
+import Fonts from '../components/Fonts.astro';
+import '../styles/base.css';
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="robots" content="noindex, nofollow" />
+		<title>{title}</title>
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<Fonts />
+		<slot name="head" />
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>

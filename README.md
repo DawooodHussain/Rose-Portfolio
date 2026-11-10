@@ -15,7 +15,13 @@ npm run preview   # serve dist/
 
 ## What's where
 
-- `src/pages/index.astro` — the whole page: markup, styles (`<style is:global>`) and inline scripts.
+- `src/pages/index.astro` — the home page: composes the section components, nothing else.
+- `src/pages/resume.astro` — the `/resume` page (scoped styles + print CSS).
+- `src/layouts/BaseLayout.astro` — the shared `<html>`/`<head>` shell (meta, favicon, fonts, `base.css`).
+- `src/components/` — shared pieces (`Fonts`, `StarSprite` + `Star`, `ArrowIcon`); `home/` holds one component per section (`Hero`, `Nav`, `MobileMenu`, `About`, `Facts`, `Interlude`, `StatStory`, `Hello`, `Wipes`) and `navLinks.ts`.
+- `src/styles/base.css` — tokens, resets, `.btn`, `.micro`. `src/styles/home.css` imports one file per section from `src/styles/home/`, **in cascade order** (don't reorder).
+- `src/scripts/home/` — the home page behaviour, one module per feature, wired up by `main.ts`: `transitions` (chevron wipes), `menu`, `nav-state`, `reveal`, `leaves`, `roam-mark`, `stat-story` (built on `water` and `spray`), `copy-email`. `src/scripts/print.ts` is the resume's Save as PDF button; `src/scripts/util.ts` has the shared helpers.
+- `src/data/resume.ts` — resume content for the facts screen and `/resume`.
 - `src/data/profile.ts` — name, email and links. Copied from `../frontend/src/data/content.ts`; keep them in sync by hand.
 - `public/flowers/` — the Redouté rose and the three white leaves (CC0, Cleveland Museum of Art).
 - `public/photos/` — the oval and inline photos (CC0, Cleveland Museum of Art).

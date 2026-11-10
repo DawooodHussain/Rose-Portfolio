@@ -1,0 +1,45 @@
+/* Home page: scroll snapping and the full-screen section base. */
+:root {
+	/* The display size shared by the hero name and the About title (the wipe hands one off to the other). */
+	--display-size: clamp(96px, 15vw, 210px);
+}
+/* Very narrow phones: small enough that "about" plus its (daud) superscript fit the width. */
+@media (max-width: 359px) {
+	:root {
+		--display-size: 84px;
+	}
+}
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		scroll-behavior: smooth;
+	}
+}
+/* Scroll snapping: each scroll settles on the start of a full section. */
+html {
+	scroll-snap-type: y mandatory;
+}
+.sec,
+.about-screen {
+	scroll-snap-align: start;
+	scroll-snap-stop: always;
+}
+/* ---------- sections ---------- */
+.sec {
+	position: relative;
+	min-height: 100svh;
+	/* Vertical padding shrinks on short screens (phones held sideways), so each screen stays one screen tall. */
+	padding: clamp(4.5rem, 16svh, 9rem) 2rem;
+	overflow: hidden;
+}
+.marigold {
+	background: var(--marigold);
+}
+.milk {
+	background: var(--milk);
+}
+
+@media (max-width: 767px) {
+	.sec {
+		padding: clamp(3.5rem, 14svh, 5rem) 1.25rem;
+	}
+}

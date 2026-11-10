@@ -1,0 +1,12 @@
+---
+// The asterisk mark as an SVG symbol. Render once per page, then draw it with <Star />.
+// Its stroke width comes from --star-stroke (default 1).
+---
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+	<defs>
+		<symbol id="star" viewBox="0 0 24 24">
+			<path d="M12 1v22M2.47 6.5l19.06 11M2.47 17.5l19.06-11" fill="none" stroke="currentColor" stroke-linecap="round" style="stroke-width: var(--star-stroke, 1)"></path>
+		</symbol>
+	</defs>
+</svg>

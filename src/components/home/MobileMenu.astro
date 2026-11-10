@@ -1,0 +1,11 @@
+---
+// Mobile menu overlay, opened by the nav's MENU button (src/scripts/home/menu.ts).
+import { linkAttrs, outboundLinks, sectionLinks } from './navLinks';
+---
+
+<div class="menu milk" id="menu" hidden>
+	<button class="nav-link menu-close" type="button">Close</button>
+	<ul>
+		{[...sectionLinks, ...outboundLinks].map((l) => <li><a href={l.href} {...linkAttrs(l)}>{l.label}</a></li>)}
+	</ul>
+</div>

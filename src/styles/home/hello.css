@@ -1,0 +1,52 @@
+/* ---------- hello ---------- */
+.hello {
+	display: grid;
+	place-items: center;
+	text-align: center;
+}
+.hello-inner {
+	display: grid;
+	justify-items: center;
+	gap: 1.25rem;
+}
+.hello-title {
+	font: 400 clamp(48px, 7vw, 110px) / 1 var(--serif);
+	font-variation-settings: 'opsz' 96;
+	letter-spacing: -0.03em;
+}
+.hello-email {
+	margin-bottom: 1.25rem;
+	font: 400 clamp(20px, 2.4vw, 32px) / 1.2 var(--serif);
+}
+.hello-actions {
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
+}
+.text-btn {
+	min-height: 44px;
+	font: 500 12px/16px var(--sans);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	text-decoration: underline;
+	text-underline-offset: 4px;
+}
+.hello-corners {
+	position: absolute;
+	inset: auto 2rem 2.5rem;
+	display: flex;
+	justify-content: space-between;
+}
+
+@media (max-width: 767px) {
+	.hello-actions {
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+	.hello-corners {
+		inset: auto 1.25rem 1.5rem;
+		flex-direction: column;
+		gap: 0.25rem;
+		align-items: center;
+	}
+}

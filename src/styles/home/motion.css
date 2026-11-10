@@ -1,0 +1,39 @@
+/* Shared motion pieces: keyframes and the masked word reveal (used by the hero, Hello and the wipes). */
+@keyframes rise {
+	from {
+		opacity: 0;
+		translate: 0 16px;
+	}
+}
+@keyframes fade {
+	from {
+		opacity: 0;
+	}
+}
+/* Words sit in a clipping box so they can slide out of / into view (masked text reveal). */
+.word-mask {
+	display: inline-block;
+	overflow: hidden;
+	vertical-align: top;
+	/* Room for Bodoni's ascenders/descenders at line-height 0.85. */
+	padding-block: 0.08em;
+	margin-block: -0.08em;
+}
+.word {
+	display: inline-block;
+}
+@keyframes fade-out {
+	to {
+		opacity: 0;
+	}
+}
+@keyframes word-out {
+	to {
+		translate: 0 -110%;
+	}
+}
+@keyframes word-in {
+	from {
+		translate: 0 110%;
+	}
+}

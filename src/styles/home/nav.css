@@ -1,0 +1,123 @@
+/* ---------- nav ---------- */
+.nav {
+	/* Fixed header: stays on screen in every section. */
+	position: fixed;
+	/* Above the chevron wipe (45), like the reference, where the nav stays put during the transition. */
+	z-index: 46;
+	inset: 1rem 2rem auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: start;
+	font: 500 12px/16px var(--sans);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	transition: color 300ms var(--ease);
+}
+/* Over the dark chapter the nav turns milk; never during a wipe (the wipe brings marigold/rose). */
+.on-dark:not(.wiping) .nav {
+	color: var(--milk);
+}
+.on-dark:not(.wiping) .nav :focus-visible {
+	outline-color: var(--milk);
+}
+.nav-group {
+	display: flex;
+	gap: 0.5rem;
+}
+.nav-group.right {
+	justify-content: flex-end;
+}
+/* The link keeps a 44px tap target; the hover pill is a smaller ring drawn inside it. */
+.nav-link {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	padding: 0 0.75rem;
+}
+.nav-link::before {
+	content: '';
+	position: absolute;
+	inset: 9px 0.3rem;
+	pointer-events: none;
+}
+.nav-link:hover::before,
+.nav-link:focus-visible::before,
+.nav-link[aria-current='true']::before {
+	border-color: var(--ink);
+}
+/* Asterisk mark: sized like the reference (~1/25 of the viewport width on desktop). */
+.mark svg {
+	display: block;
+	width: 56px;
+	height: 56px;
+}
+.mark {
+	position: absolute;
+	z-index: 46;
+	top: 1rem;
+	left: 50%;
+	translate: -50% 0;
+	display: grid;
+	place-items: center;
+	width: 64px;
+	height: 64px;
+}
+.menu-btn {
+	display: none;
+	/* Buttons don't inherit text-transform/letter-spacing from the nav. */
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+}
+.menu {
+	position: fixed;
+	inset: 0;
+	z-index: 50;
+	display: grid;
+	align-content: center;
+	padding: 5rem 1.25rem;
+}
+.menu[hidden] {
+	display: none;
+}
+.menu ul {
+	display: grid;
+	gap: 0.5rem;
+}
+.menu a {
+	font: 400 32px/1.3 var(--serif);
+	letter-spacing: -0.01em;
+}
+.menu-close {
+	position: absolute;
+	top: 0.75rem;
+	right: 1rem;
+	font: 500 12px/16px var(--sans);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+@media (max-width: 767px) {
+	/* Asterisk centred, MENU on the right; the link groups move into the overlay. */
+	.nav {
+		inset: 0.75rem 1rem auto;
+		display: flex;
+		justify-content: space-between;
+	}
+	.nav-group {
+		display: none;
+	}
+	.menu-btn {
+		display: inline-flex;
+		margin-left: auto;
+	}
+	.mark svg {
+		width: 40px;
+		height: 40px;
+	}
+	.mark {
+		top: 0.75rem;
+		width: 48px;
+		height: 48px;
+	}
+}

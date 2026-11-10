@@ -1,0 +1,31 @@
+---
+/*
+ * STAT + GITHUB LINE: pinned scroll moment (dark chapter).
+ * 250svh tall with a pinned stage. Scroll raises the "GitHub" line and drops "02" into it;
+ * the splash and ripples after the impact are a real-time water simulation
+ * (src/scripts/home/stat-story.ts).
+ */
+import { profile } from '../../data/profile';
+
+// "GitHub GitHub …", split into letters so each can ride the wave.
+const marqueeWords = Array.from({ length: 6 }, () => 'GitHub');
+---
+
+<section class="stat-story" aria-label="Experience">
+	<div class="stat-stage">
+		<p class="stat"><span class="stat-num">{profile.years}</span><span class="stat-label">Years building for the web</span></p>
+		<a class="marquee" href={profile.github} target="_blank" rel="noreferrer" aria-label={`${profile.name} on GitHub`}>
+			<span class="mq-track" aria-hidden="true">
+				{
+					marqueeWords.map((w) => (
+						<span class="mq-word">
+							{[...w].map((ch) => (
+								<span class="mq-ch">{ch}</span>
+							))}
+						</span>
+					))
+				}
+			</span>
+		</a>
+	</div>
+</section>
